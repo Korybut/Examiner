@@ -56,8 +56,9 @@ public class Question implements Comparable {
         return arr;
     }
 
+    // Reads files with questions data
     static Question[] readQuestionData(File file){
-        List<Question> qb = null;
+        List<Question> qb = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(file);
             int count = 0;
@@ -73,10 +74,11 @@ public class Question implements Comparable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        if (qb != null) {
-            return qb.toArray(new Question[qb.size()]);
-        }
-        return new Question[0];
+        return qb.toArray(new Question[qb.size()]);
+    }
+
+    public char getCorrectAnswer(){
+        return correct;
     }
 
 }

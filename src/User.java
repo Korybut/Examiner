@@ -15,6 +15,7 @@ public class User {
     private int doneExam;
     private ImageIcon avatar;
 
+    // When client create new profile with just necessary information.
     public User(String login, char[] PASSWORD, String name, String surname) {
         this.login = login;
         this.PASSWORD = PASSWORD;
@@ -22,6 +23,7 @@ public class User {
         this.surname = name;
     }
 
+    // When client profile is exist, or client expand his profile without image.
     public User(String login, char[] PASSWORD, String name, String surname, int points, int passExam, int failExam, int doneExam) {
         this.login = login;
         this.PASSWORD = PASSWORD;
@@ -33,6 +35,7 @@ public class User {
         this.doneExam = doneExam;
     }
 
+    // When profile is exist, or client expand his profile with profile image.
     public User(String login, char[] PASSWORD, String name, String surname, int points, int passExam, int failExam, int doneExam, ImageIcon avatar) {
         this.login = login;
         this.PASSWORD = PASSWORD;
@@ -44,6 +47,10 @@ public class User {
         this.doneExam = doneExam;
         this.avatar = avatar;
     }
+
+    //LOADING USER DATA AFTER AUTHENTICATION... to do
+    //...
+    //
 
     public String getLogin() {
         return login;
