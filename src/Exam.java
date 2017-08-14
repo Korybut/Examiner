@@ -15,8 +15,19 @@ public class Exam {
         return questionList[n];
     }
 
-    public void setAnswer(int n, char ch){
-        answerList[n] = ch;
+    public void setAnswer(int n, int index){
+        switch (index){
+            case 0 : answerList[n] = Character.toUpperCase('A');
+                break;
+            case 1 : answerList[n] = Character.toUpperCase('B');
+                break;
+            case 2 : answerList[n] = Character.toUpperCase('C');
+                break;
+            case 3 : answerList[n] = Character.toUpperCase('D');
+                break;
+            default:
+                break;
+        }
     }
 
     // Gives char correct prompt.
@@ -34,6 +45,10 @@ public class Exam {
         int points = 0;
         for(int i=0; i<answerList.length; i++) if (checkAnswer(i)) points++;
         return points;
+    }
+
+    public int getSize(){
+        return questionList.length;
     }
 
     // Gives true or false when exam was passed of failed. Pass when percent of sum points is higher than 49%.

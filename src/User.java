@@ -112,6 +112,13 @@ public class User {
         this.doneExam = doneExam;
     }
 
+    public void updateProfile(int points, boolean examStat){
+        this.points += points;
+        doneExam += 1;
+        if(examStat) passExam += 1;
+        else failExam += 1;
+    }
+
     public void setAvatar(ImageIcon avatar) {
         this.avatar = avatar;
     }

@@ -1,9 +1,6 @@
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.List;
 
 /**
  * Created by Korybut on 05.08.2017.
@@ -14,6 +11,7 @@ public class Question implements Comparable {
     private String content;
     private ArrayList<String> prompt = new ArrayList<>(4);
     private char correct;
+    private String imageURL;
 
     public Question(int id, String content, String[] prompt, char correct) {
         this.id = id;
@@ -22,12 +20,12 @@ public class Question implements Comparable {
         this.correct = correct;
     }
 
-    public Question(int id, String content, String[] prompt, char correct, String imgName) {
+    public Question(int id, String content, String[] prompt, char correct, String imageURL) {
         this.id = id;
         this.content = content;
         Collections.addAll(this.prompt, prompt);
         this.correct = correct;
-        ImageIcon picture = new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource(imgName));
+        this.imageURL = imageURL;
     }
 
     @Override
@@ -39,7 +37,7 @@ public class Question implements Comparable {
     // Check that the objects are that same.
     private static boolean contains(Question[] array, Question q){
         for(Question a : array){
-            if(a.compareTo(q)==0) return true;
+            if(a != null) if (a.compareTo(q)==0) return true;
         }
         return false;
     }
@@ -48,10 +46,14 @@ public class Question implements Comparable {
     static Question[] getRandomArray(Question[] qb, int n){
         Random rand = new Random();
         Question[] arr = new Question[n];
-        int a = rand.nextInt(qb.length);
-        for(Question q : arr){
-            while(Question.contains(arr, qb[a])) a = rand.nextInt(qb.length);
-            q = qb[a];
+        arr[0] = qb[rand.nextInt(qb.length)];
+        int count = 1;
+        while(count<n){
+            int a = rand.nextInt(qb.length);
+            if(!Question.contains(arr,qb[a])){
+                arr[count] = qb[a];
+                count++;
+            }
         }
         return arr;
     }
@@ -65,20 +67,38 @@ public class Question implements Comparable {
             while(scanner.hasNextLine()){
                 String content = scanner.nextLine();
                 String[] prompt = new String[4];
-                for(String p : prompt) p = scanner.nextLine();
+                for(int p=0; p<4; p++){
+                    prompt[p] = scanner.nextLine();
+                }
                 char correct = scanner.nextLine().charAt(0);
-                String imgName = scanner.nextLine();
-                if(imgName==null) qb.add(new Question(count, content, prompt, correct));
-                else qb.add(new Question(count, content, prompt, correct, imgName));
+                String imageURL = scanner.nextLine();
+                if(imageURL.equals("null")) qb.add(new Question(count, content, prompt, correct));
+                else qb.add(new Question(count, content, prompt, correct, imageURL));
+                count++;
             }
+            scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return qb.toArray(new Question[qb.size()]);
     }
 
+    public String getContent(){
+        return content;
+    }
+
+    public String[] getPrompt(){
+        String[] ar = new String[prompt.size()];
+        return prompt.toArray(ar);
+    }
+
+    public String getPrompt(int index){
+        return prompt.get(index);
+    }
+
     public char getCorrectAnswer(){
         return correct;
     }
 
+    public String getImageURL() { return imageURL; }
 }
